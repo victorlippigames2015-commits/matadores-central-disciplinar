@@ -1,0 +1,31 @@
+MATADORES FC — CENTRAL DISCIPLINAR
+
+ESTE PACOTE É A BASE DO SITE. ELE AINDA NÃO ESTÁ CONECTADO A UM BANCO DE DADOS.
+Não use dados reais até terminar a configuração e testar a privacidade.
+
+1) SUPABASE
+Acesse https://supabase.com/dashboard e confira se está na conta/organização certa. Se o projeto antigo não aparece, não dá para confirmar daqui se foi apagado. Se necessário, crie um projeto novo chamado matadores-fc.
+
+2) TABELAS E PRIVACIDADE
+No projeto, abra SQL Editor > New query. Copie todo o arquivo setup.sql, cole e clique Run. Faça isso apenas em projeto novo ou sem dados importantes a preservar.
+
+3) URL E CHAVE PÚBLICA
+No Supabase, abra Project Settings > API (ou API Keys). Copie Project URL e a chave anon/public. Abra config.js e substitua os textos COLE_AQUI. Nunca coloque service_role/secret key no site.
+
+4) PUBLICAR NO NETLIFY
+Descompacte o ZIP. No Netlify, use o deploy manual/drag-and-drop e envie os arquivos do site (index.html, styles.css, app.js, config.js). O arquivo setup.sql e este guia não precisam ser publicados; guarde-os no computador.
+
+5) CRIAR SUA CONTA
+Abra o site publicado, crie sua conta com e-mail e senha e confirme o e-mail, se solicitado. Entre no Supabase SQL Editor e execute este comando, trocando o e-mail pelo usado na conta:
+
+update public.profiles
+set role = 'president'
+where id = (select id from auth.users where lower(email) = lower('SEU_EMAIL_AQUI'));
+
+Confirme que uma linha foi atualizada. Saia e entre novamente no site. Contas novas são jogadores por padrão.
+
+6) JOGADORES
+Cada jogador cria sua conta com e-mail e senha. O banco cria automaticamente perfil com papel de jogador. O presidente pode registrar advertências e suspensões.
+
+IMPORTANTE SOBRE SEGURANÇA
+O SQL habilita RLS para que jogadores vejam somente seus registros. Teste com uma conta de jogador separada antes de usar. Não compartilhe a senha do presidente nem chaves privadas. Se aparecer erro, compartilhe apenas a mensagem de erro, nunca senha ou chave secreta.
